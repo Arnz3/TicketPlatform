@@ -1,31 +1,29 @@
-import { query, limit, collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
   const db = useDb();
 
   try {
-    const path = `events/${id}/ticketTypes`
-    const typeRef = collection(db, path);
+    const ticketsRef = collection(db, "tickets");
 
     const q = query(
-      typeRef,
-      limit(20),
+      ticketsRef, 
+      where("purchaserId", "==", id)
     );
 
     const snapshot = await getDocs(q);
 
-    const types = snapshot.docs.map(doc => ({
+    const tickets = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
 
-    return types;
-
-  }catch( e: any ){
+    return tickets;
+  } catch (e: any){
     createError({
       statusCode: e.statusCode || 500,
       statusMessage: e.statusMessage || "Internal Server Error"
     })
   }
-});
+})

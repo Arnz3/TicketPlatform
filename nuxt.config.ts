@@ -4,9 +4,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxt/ui', '@nuxt/hints'],
   css: ['~/assets/css/main.css'],
-  plugins: [
-      'plugins/1.firebase.client',
-  ],
   ui: {
     colorMode: false,
     fonts: false

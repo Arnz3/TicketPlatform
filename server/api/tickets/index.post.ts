@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
 
       // create ticket for each name
       tickets.forEach((ticket: {holderName: String}) => {
-        const newTicketRef = doc(collection(db, "ticket"));
+        const newTicketRef = doc(collection(db, "tickets"));
         transaction.set(newTicketRef, {
           eventId,
           eventName,
